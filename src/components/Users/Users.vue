@@ -143,6 +143,8 @@
                     ></v-text-field>
                     </template>
                     <v-date-picker
+                      :header-date-format="headerDateFormat"
+                      :title-date-format="titleDateFormat"
                       v-model="editedItem.startDate"
                      @change="menu1 = false"
                     ></v-date-picker>
@@ -233,6 +235,7 @@
 <script>
 import moment from 'moment';
 import { format, parseISO } from 'date-fns';
+moment.locale('ru');
 
   export default {
     components: {
@@ -331,6 +334,16 @@ import { format, parseISO } from 'date-fns';
           employees.push(JSON.parse(localStorage.getItem(key)));
         })
         this.employees = employees;
+      },
+
+      headerDateFormat() {
+        const date = this.editedItem.startDate ? this.editedItem.startDate : this.date
+        return moment(date).format('DD MMMM YYYY')
+      },
+
+      titleDateFormat() {
+        const date = this.editedItem.startDate ? this.editedItem.startDate : this.date
+        return moment(date).format('dddd DD MMMM YYYY')
       },
 
       editItem (item) {
